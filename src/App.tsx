@@ -41,7 +41,7 @@ function App() {
       element: (
 
         <Layout>
-          <Home />,
+          <Home />
         </Layout>
       )
     },
@@ -52,16 +52,16 @@ function App() {
       element: (
 
         <Layout>
-          <Cart />,
+          <Cart />
         </Layout>
       )
     },
 
     {
-      path: "/DetailsPage",
+      path: "/details/:id",
       element: (
         <Layout>
-          <DetailsPage />,
+          <DetailsPage />
         </Layout>
       )
     }
@@ -70,6 +70,20 @@ function App() {
 
   const [data, setData] = useState<dataType[]>([])
   const [countCart, setCountCart] = useState<Record<number, number>>({})
+
+
+//   useEffect(() => {
+//   const storedCart = localStorage.getItem("cart")
+
+//   if (storedCart) {
+//     setCountCart(JSON.parse(storedCart))
+//   }
+// }, [])
+
+
+// useEffect(() => {
+//   localStorage.setItem("cart", JSON.stringify(countCart))
+// }, [countCart])
 
   useEffect(() => {
 

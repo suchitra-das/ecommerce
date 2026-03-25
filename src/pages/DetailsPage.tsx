@@ -1,38 +1,37 @@
 import { EcommerceContext } from "@/context/ecommerceContext"
 import { useContext } from "react"
-
+import { useParams } from "react-router-dom"
 
 function DetailsPage() {
+    const { data } = useContext(EcommerceContext)!
+    const { id } = useParams()
 
-    const { data, countCart } = useContext(EcommerceContext)!
+    
+    const product = data.find((item) => item.id === Number(id))
 
-    const selectData = data.filter((item) => countCart[item.id])
+    if (!product) {
+        return <div className="text-center mt-10">Product not found</div>
+    }
 
     return (
-        <div className="flex items-center justify-center p-6">
-            {selectData.map((item) => (
-                <div>
+        <div className="flex flex-col items-center p-10 gap-4">
+            <img
+                src={product.image}
+                alt="image"
+                className="w-40 h-40 object-cover"
+            />
 
-                    <div className="text-lg">
-                        {item.category}
-                    </div>
-                    <div>
-                        {item.title}
-                    </div>
-                    <img
-                        src={item.image}
-                        alt="image"
-                        className="w-26 h-26 object-cover rounded-lg"
-                    />
-                </div>
+            <h2 className="text-xl font-bold">{product.title}</h2>
 
+            <p className="text-gray-500">{product.category}</p>
 
-            )
+            <p className="text-green-600 font-bold">₹{product.price}</p>
 
-            )}
+            <p className="text-center max-w-md">
+                {product.description}
+            </p>
         </div>
     )
 }
 
 export default DetailsPage
-

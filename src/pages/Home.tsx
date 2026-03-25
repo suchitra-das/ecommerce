@@ -6,13 +6,6 @@ import { useContext } from "react"
 import { useNavigate } from "react-router";
 
 
-
-
-
-
-
-
-
 function Home() {
 
 
@@ -21,8 +14,10 @@ function Home() {
   const { data, handleAddCart, handleDeleteCart, countCart } = useContext(EcommerceContext)!
 
 
-  const handleDetail = () => {
-    navigate("/DetailsPage")
+  const handleDetail = (id: number) => {
+
+   
+    navigate(`/details/${id}`)
 
   }
 
@@ -35,7 +30,7 @@ function Home() {
           key={item.id}
           className="bg-white shadow-md rounded-2xl px-2 py-6 flex flex-col items-center gap-2 border"
         >
-          <div onClick={handleDetail} className="flex flex-col items-center justify-center">
+          <div onClick={() => handleDetail(item.id)} className="flex flex-col items-center justify-center">
             <img
               src={item.image}
               alt="image"
