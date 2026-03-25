@@ -1,46 +1,55 @@
-import { EcommerceContext } from "@/context/ecommerceContext"
-import { useContext } from "react"
+
+import { EcommerceContext } from "@/context/ecommerceContext";
+
+import { useContext } from "react";
+import { TiShoppingCart } from "react-icons/ti";
 import { Link } from "react-router-dom";
 
 
 const Navbar = () => {
 
-const {count} = useContext(EcommerceContext)!
-  const totalItems = Object.values(count).reduce((a, b) => a + b, 0);
+    const context = useContext(EcommerceContext);
+
+    if (!context) {
+        throw new Error("EcommerceContext not found");
+    }
+
+    const { countCart } = context;
+
+
+
+    const totalCart = Object.values(countCart).reduce((a: number, b: number) => a + b, 0);
 
     return (
-        <div className="flex bg-blue-950 p-10 items-center justify-center">
+        <div className="flex bg-blue-950 p-10 items-center justify-between">
 
-            <div className="flex gap-16">
+            <Link
+                to="/home"
+                className="hover:text-green-400 text-white text-lg"
+            >
+                Home
+            </Link>
 
-                <Link
-                    to="/home"
-                    className="hover:text-green-400 transition duration-200 text-white"
-                >
-                    Home
-                </Link>
+            <Link
+                to="/cart"
+                className="hover:text-green-400 text-white text-lg"
+            >
+                Cart
+            </Link>
 
+            <Link
+                to="/"
+                className="hover:text-green-400 text-white text-lg"
+            >
+                <div className="flex">
+                    <TiShoppingCart className="h-6 w-6 " />
+                    <sub>{totalCart}</sub>
 
+                </div>
 
-                <Link
-                    to="/cart"
-                    className="hover:text-green-700-400 transition duration-200 text-white"
-                >
-                    Cart
-                </Link>
-
-
-                <Link
-                    to="/cart"
-                    className="hover:text-green-700-400 transition duration-200 text-white"
-                >
-                    card<sub>{totalItems}</sub>
-                </Link>
-
-            </div>
+            </Link>
 
         </div>
-
     )
 }
 

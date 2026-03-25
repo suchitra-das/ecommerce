@@ -1,86 +1,87 @@
+
 import { Button } from "@/components/ui/button";
-import { useEffect, useState } from "react"
+import { EcommerceContext, type dataType } from "@/context/ecommerceContext";
+import { useContext } from "react"
+// import { MdDeleteOutline } from "react-icons/md";
+import { useNavigate } from "react-router";
+
+
+
+
+
+
 
 
 
 function Home() {
 
-  const [data, setData] = useState<any>([])
-  const [count, setCount] = useState<{ [key: number]: number }>({})
 
-  useEffect(() => {
+  const navigate = useNavigate()
 
-    fetch('https://fakestoreapi.com/products/')
-      .then(response => response.json())
-      .then(data => setData(data));
+  const { data, handleAddCart, handleDeleteCart, countCart } = useContext(EcommerceContext)!
 
 
-    // console.log(data, "data")
- }, [])
+  const handleDetail = () => {
+    navigate("/DetailsPage")
+
+  }
 
 
-const handleAdd = (id: number) => {
-  console.log("add product id", id);
-
-  setCount((prev) => ({
-    ...prev,
-    [id]: prev[id] ? prev[id] + 1 : 1,
-  }));
-};
-
-
-
-const handleDelete = (id:number) => {
-  setCount((prev)=>({...prev,
-    [id] : prev[id] > 1 ? prev[id] -1 : 0
-  }))
-}
   return (
 
-    <div className="grid grid-cols-4 gap-6">
-    {data.map((item: any, index: number) => (
-  <div
-    key={index}
-    className="bg-white shadow-md rounded-2xl p-4 flex flex-col items-center gap-2 "
-  >
-    <img
-      src={item.image}
-      alt="image"
-      className="w-24 h-24 object-cover rounded-lg"
-    />
+    <div className="grid grid-cols-4 gap-6 p-10" >
+      {data.map((item: dataType) => (
+        <div
+          key={item.id}
+          className="bg-white shadow-md rounded-2xl px-2 py-6 flex flex-col items-center gap-2 border"
+        >
+          <div onClick={handleDetail} className="flex flex-col items-center justify-center">
+            <img
+              src={item.image}
+              alt="image"
+              className="w-26 h-26 object-cover rounded-lg"
+            />
 
-    <div className="text-lg font-semibold text-gray-800">
-      {item.category}
-    </div>
+            <div className="text-lg font-semibold text-gray-800">
+              {item.category}
+            </div>
 
-    <div className="text-sm text-gray-500 text-center">
-      {item.description}
-    </div>
+            {/* <div className="text-sm text-gray-500 text-center">
+            {item.description}
+          </div> */}
 
-    <div className="text-base font-bold text-green-600">
-      ₹{item.price}
-    </div>
+            <div className="text-base font-bold text-green-600">
+              ₹{item.price}
+            </div>
+          </div>
+          {/* <div>Rate:{item.rating.rate}</div> */}
+          {/* <div>count :{item.rating.count}</div> */}
 
-    
-{
-  count[item.id] ? (
-    <div className="flex items-center gap-2">
-      <button onClick={()=>handleDelete(item.id)}>-</button>
 
-      <span>{count[item.id]}</span>
 
-      <button onClick={() => handleAdd(item.id)}>+</button>
-    </div>
-  ) : (
-    <Button onClick={() => handleAdd(item.id)}>
-      Add to Cart
-    </Button>
-  )
-}
-   
-    
-  </div>
-))}
+
+          {
+            countCart[item.id] ? (
+              <div className="flex items-center  border px-8 gap-6 rounded-2xl border-amber-300">
+                <div onClick={() => handleDeleteCart(item.id)} >
+
+                  -
+
+                </div>
+
+                <span>{countCart[item.id]}</span>
+
+                <div onClick={() => handleAddCart(item.id)}>+</div>
+              </div>
+            ) : (
+              <Button onClick={() => handleAddCart(item.id)} className="bg-amber-400 text-black">
+                Add to Cart
+              </Button>
+            )
+          }
+
+        </div>
+      ))}
 
     </div>
   )
