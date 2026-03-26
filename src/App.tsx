@@ -7,7 +7,7 @@ import './App.css'
 import { EcommerceContext } from "./context/ecommerceContext";
 import { useEffect, useState } from "react";
 import DetailsPage from "./pages/DetailsPage";
-
+import axios from 'axios'
 
 
 
@@ -87,9 +87,9 @@ function App() {
 
   useEffect(() => {
 
-    fetch('https://fakestoreapi.com/products/')
-      .then(response => response.json())
-      .then(data => setData(data));
+    axios.get('https://fakestoreapi.com/products/')
+      // .then(response => response.json())
+      .then(res => setData(res.data));
 
 
     // console.log(data, "data")
