@@ -1,35 +1,86 @@
-import { EcommerceContext } from "@/context/ecommerceContext"
+
+
+import { Button } from "@/components/ui/button"
+import { EcommerceContext, type dataType } from "@/context/ecommerceContext"
 import { useContext } from "react"
 import { useParams } from "react-router-dom"
 
+
+
 function DetailsPage() {
-    const { data } = useContext(EcommerceContext)!
+    const { data, countCart, handleDeleteCart, handleAddCart } = useContext(EcommerceContext)!
     const { id } = useParams()
 
-    
-    const product = data.find((item) => item.id === Number(id))
 
-    if (!product) {
-        return <div className="text-center mt-10">Product not found</div>
+    let details: dataType | undefined = undefined
+    for (let i = 0; i < data.length; i++) {
+
+        if (data[i].id.toString() === id) {
+            details = data[i];
+            break;
+        }
     }
 
+
+    console.log(typeof details)
+    console.log(details, "suchitra")
+
     return (
-        <div className="flex flex-col items-center p-10 gap-4">
-            <img
-                src={product.image}
-                alt="image"
-                className="w-40 h-40 object-cover"
-            />
 
-            <h2 className="text-xl font-bold">{product.title}</h2>
 
-            <p className="text-gray-500">{product.category}</p>
+        <div className="flex justify-center items-center p-10 gap-12 mt-20">
 
-            <p className="text-green-600 font-bold">₹{product.price}</p>
+            {details !== undefined ? (<div className="flex gap-10 border p-10 shadow-2xl rounded-lg border-blue-950">
 
-            <p className="text-center max-w-md">
-                {product.description}
-            </p>
+                <div className="bg-blue-200 p-12 rounded-3xl shadow-lg">
+                    <img
+                        src={details.image}
+                        alt="image"
+                        className="w-60 h-60 object-cover"
+                    />
+
+                </div>
+
+                <div className="items-center justify-center p-4 flex flex-col">
+                    <h2 className="text-xl font-bold ">{details.title}</h2>
+
+                    <p className="text-gray-800 text-md">{details.category}</p>
+
+                    <p className="text-green-600 font-bold">₹{details.price}</p>
+
+                    <p className="text-center max-w-md ">
+                        {details.description}
+                    </p>
+
+                    <p className="text-center max-w-md">
+
+                    </p>
+
+
+                    <div className=" p-2">
+                        <div className="flex items-center  border px-8 gap-6 rounded-2xl border-amber-300">
+                            <div onClick={() => handleDeleteCart(details.id)} >
+
+                                -
+
+                            </div>
+
+                            <span className="">{countCart[details.id] || 1}</span>
+
+                            <div onClick={() => handleAddCart(details.id)}>+</div>
+                        </div>
+
+
+                    </div>
+
+
+
+
+
+
+                </div>
+            </div>) : null}
+
         </div>
     )
 }

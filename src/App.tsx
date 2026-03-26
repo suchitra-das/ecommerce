@@ -7,6 +7,7 @@ import './App.css'
 import { EcommerceContext } from "./context/ecommerceContext";
 import { useEffect, useState } from "react";
 import DetailsPage from "./pages/DetailsPage";
+import Payment from "./pages/Payment";
 
 
 
@@ -64,7 +65,19 @@ function App() {
           <DetailsPage />
         </Layout>
       )
+    },
+
+    {
+      path: "/Payment",
+      element: (
+        <Layout>
+
+          <Payment />
+        </Layout>
+      )
     }
+
+
   ]);
 
 
@@ -72,18 +85,10 @@ function App() {
   const [countCart, setCountCart] = useState<Record<number, number>>({})
 
 
-//   useEffect(() => {
-//   const storedCart = localStorage.getItem("cart")
-
-//   if (storedCart) {
-//     setCountCart(JSON.parse(storedCart))
-//   }
-// }, [])
 
 
-// useEffect(() => {
-//   localStorage.setItem("cart", JSON.stringify(countCart))
-// }, [countCart])
+
+
 
   useEffect(() => {
 

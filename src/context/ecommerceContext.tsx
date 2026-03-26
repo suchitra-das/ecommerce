@@ -19,6 +19,7 @@ export type dataType = {
     description: string;
     image: string;
     category: string;
+
 };
 
 export type EcommerceContextType = {
