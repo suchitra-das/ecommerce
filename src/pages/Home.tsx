@@ -16,7 +16,7 @@ function Home() {
 
   const handleDetail = (id: number) => {
 
-   
+
     navigate(`/details/${id}`)
 
   }
@@ -24,7 +24,8 @@ function Home() {
 
   return (
 
-    <div className="grid grid-cols-4 gap-6 p-10" >
+    <div className="grid lg:grid-cols-4 gap-6 p-10 md:grid-cols-3 " >
+
       {data.map((item: dataType) => (
         <div
           key={item.id}

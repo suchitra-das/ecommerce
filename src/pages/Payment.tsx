@@ -1,13 +1,13 @@
 import { Button } from '@/components/ui/button'
 import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  
+    Dialog,
+    DialogContent,
+    DialogHeader,
+    DialogTitle,
+
 } from '@/components/ui/dialog'
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom'; 
+import { useNavigate } from 'react-router-dom';
 
 function Payment() {
 
@@ -18,7 +18,7 @@ function Payment() {
     });
 
     const [open, setOpen] = useState(false);
-    const navigate = useNavigate(); 
+    const navigate = useNavigate();
 
     const handlePayment = () => {
         if (!payment.name || !payment.card || !payment.cvv) {
@@ -29,7 +29,7 @@ function Payment() {
         setOpen(true);
     };
 
-    const handleChange = (e:any) => {
+    const handleChange = (e: any) => {
         setPayment({
             ...payment,
             [e.target.name]: e.target.value
@@ -38,16 +38,24 @@ function Payment() {
 
     const handleOk = () => {
         setOpen(false);
-        navigate('/home'); 
+        navigate('/home');
     };
 
     return (
-        <div className='flex flex-col items-center justify-center m-4'>
-            
+        <div className='flex flex-col items-center justify-center m-4 md:p-40'>
+
             <h2 className='text-xl font-semibold'>Payment Details</h2>
 
             <div className='border flex flex-col gap-4 p-6 mt-4 w-80 rounded-lg shadow-md'>
-                
+                <input
+                    name="name"
+                    value={payment.name}
+
+                    onChange={handleChange}
+                    placeholder="Name"
+                    className='border p-2 rounded'
+                />
+
                 <input
                     name="card"
                     value={payment.card}
@@ -64,13 +72,7 @@ function Payment() {
                     className='border p-2 rounded'
                 />
 
-                <input
-                    name="name"
-                    value={payment.name}
-                    onChange={handleChange}
-                    placeholder="Name"
-                    className='border p-2 rounded'
-                />
+
 
                 <Button onClick={handlePayment}>
                     Payment Now
@@ -78,22 +80,22 @@ function Payment() {
 
             </div>
 
-           
+
             <Dialog open={open} onOpenChange={setOpen} >
-                <DialogContent className="w-[500px] h-[300px] items-center justify-center">
+                <DialogContent className=" items-center justify-center">
 
                     <DialogHeader>
                         <DialogTitle className="text-blue-600">
-                             Payment Successful
+                            Payment Successful
                         </DialogTitle>
-                       <Button onClick={handleOk} className='bg-blue-700 text-white'>
+                        <Button onClick={handleOk} className='bg-blue-700 text-white'>
                             OK
                         </Button>
-                        
+
                     </DialogHeader>
 
-                    
-                   
+
+
 
                 </DialogContent>
             </Dialog>

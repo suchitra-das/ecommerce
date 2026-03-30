@@ -28,7 +28,7 @@ function App() {
 
   const router = createBrowserRouter([
     {
-      path: "/SignIn",
+      path: "/",
       element:
         < SignIn />
       ,
@@ -113,18 +113,18 @@ function App() {
   }
 
 
-const handleRemoveItem = (id: number) => {
-  setCountCart((prev) => {
-    const update = { ...prev };
-    delete update[id];   
-    return update;       
-  });
-};
+  const handleRemoveItem = (id: number) => {
+    setCountCart((prev) => {
+      const update = { ...prev };
+      delete update[id];
+      return update;
+    });
+  };
 
 
   return (
     <>
-      <EcommerceContext.Provider value={{ data, handleAddCart, handleDeleteCart, countCart , handleRemoveItem}}>
+      <EcommerceContext.Provider value={{ data, handleAddCart, handleDeleteCart, countCart, handleRemoveItem }}>
         <RouterProvider router={router} />
       </EcommerceContext.Provider>
     </>
