@@ -13,10 +13,6 @@ import Payment from "./pages/Payment";
 
 
 
-
-
-
-
 type dataType = {
   "id": number
   "title": string,
@@ -117,13 +113,18 @@ function App() {
   }
 
 
-
-
+const handleRemoveItem = (id: number) => {
+  setCountCart((prev) => {
+    const update = { ...prev };
+    delete update[id];   
+    return update;       
+  });
+};
 
 
   return (
     <>
-      <EcommerceContext.Provider value={{ data, handleAddCart, handleDeleteCart, countCart }}>
+      <EcommerceContext.Provider value={{ data, handleAddCart, handleDeleteCart, countCart , handleRemoveItem}}>
         <RouterProvider router={router} />
       </EcommerceContext.Provider>
     </>

@@ -27,6 +27,7 @@ export type EcommerceContextType = {
     countCart: Record<number, number>;
     handleAddCart: (id: number) => void;
     handleDeleteCart: (id: number) => void;
+    handleRemoveItem: (id:number) => void;
 };
 
 // default value (important for TS)

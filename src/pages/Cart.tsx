@@ -4,9 +4,18 @@ import { useContext } from "react"
 import { useNavigate } from "react-router"
 
 
+function formatPrice(value:number){
+    return new Intl.NumberFormat("en-IN",{
+        style : "currency",
+        currency: "INR",
+         maximumFractionDigits: 0,
+    }).format(value)
+}""
+
+
 
 function Cart() {
-    const { data, countCart, handleDeleteCart, handleAddCart } = useContext(EcommerceContext)!
+    const { data, countCart, handleDeleteCart, handleAddCart, handleRemoveItem} = useContext(EcommerceContext)!
     const selectData = data.filter((item) => countCart[item.id])
 
     const navigate = useNavigate()
@@ -16,7 +25,9 @@ function Cart() {
 
 
 
-    let TotalAmount = 0;
+
+
+    let grandTotal = 0;
 
     for (let i = 0; i < selectData.length; i++) {
         console.log("suchitra")
@@ -25,7 +36,7 @@ function Cart() {
         console.log(amount)
         let quantity = countCart[amount.id]
 
-        TotalAmount += amount.price * quantity
+        grandTotal += amount.price * quantity
     }
 
 
@@ -48,8 +59,15 @@ function Cart() {
 
     return (
         <div className="flex flex-col  p-4 m-6 justify-center">
-            {selectData.map((item) => (
-                <div
+            {selectData.map((item) => {
+                
+                const quantity = countCart[item.id] || 0
+                const total = item.price * quantity;
+
+
+                return  (
+
+                     <div
                     key={item.id}
                     className="border-t p-10  flex  max-w-max-200 gap-6 m-2 items-center"
                 >
@@ -78,6 +96,16 @@ function Cart() {
                             {item.title}
                         </div>
 
+                        <div className="mt-2">
+                                <div>Price: ₹ {item.price}</div>
+                                <div>Quantity: {quantity}</div>
+
+                               
+                                <div className="font-bold text-lg">
+                                    Total: ₹ {formatPrice(total)}
+                                </div>
+                            </div>
+
 
                         <div className="p-2">
 
@@ -104,7 +132,24 @@ function Cart() {
 
                         </div>
 
+ <Button
+        onClick={() =>  {
+             const confirmDelete = window.confirm("are you sure you want delete this item");
+               if(confirmDelete){
+handleRemoveItem(item.id)
+            }
 
+        }
+           
+
+          
+            
+            
+            }
+        className="bg-red-500 text-white px-4 py-2 rounded-lg"
+    >
+        Remove
+    </Button>
 
 
                     </div>
@@ -113,10 +158,11 @@ function Cart() {
 
 
                 </div>
-            ))}
+                )
+            } )}
 
-            <div className="text-3xl font-bold">totalAmount:{TotalAmount}</div>
-            <Button onClick={HandlePayment} className="w-80 py-6 bg-blue-700">Proceed Price</Button>
+            <div className="text-2xl font-bold">Grand Amount : {formatPrice(grandTotal)}</div>
+            <Button onClick={HandlePayment} className="w-80 py-6 bg-blue-700 mt-9">Proceed Price</Button>
         </div>
     )
 }
